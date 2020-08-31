@@ -40,4 +40,13 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies.junitExt
     androidTestImplementation  rootProject.ext.dependencies.espresso_core
 
+    //公用依赖包
+    implementation project(':commlib')
+
+    implementation project(':a_module_ui')
+
+    implementation project(':b_module_ui')
+
+    implementation project(':c_module_ui')
+
 }
