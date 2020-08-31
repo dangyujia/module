@@ -1,0 +1,7 @@
+<resources>
+
+
+    <!--应用主题-->
+    <style name="AdmTheme" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+
+</resources>

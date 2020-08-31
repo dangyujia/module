@@ -1,0 +1,6 @@
+include ':commlib'
+include ':c_module_ui'
+include ':b_module_ui'
+include ':a_module_ui'
+include ':app'
+rootProject.name = "module"
