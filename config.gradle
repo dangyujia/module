@@ -6,7 +6,6 @@ ext {
     isModule = true
 
     //版本号
-
     versions = [
             applicationId          : "com.app.module",     //应用ID
             versionCode            : 1,                    //版本号
