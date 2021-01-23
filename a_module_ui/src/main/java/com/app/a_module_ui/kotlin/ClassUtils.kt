@@ -204,7 +204,7 @@ fun fundd() {
 //endregion
 
 //region 内联类模拟枚举
-inline class StateEnum(val ordinal: Int) {
+class StateEnum(val ordinal: Int) {
     companion object {
         val Idle = StateEnum(0)
         val Busy = StateEnum(1)
@@ -227,9 +227,6 @@ fun setRouteType(routeTypeInline: RouteTypeInline) {
 
 }
 
-fun main() {
-    setRouteType(RouteTypes.WALK)
-}
 //内联类的限制
 //主构造器必须有且只有一个只读属性
 //不能定义有backing-filed的其他属性
@@ -241,4 +238,79 @@ fun main() {
 //region typealias与inline class区别
 //typealias  类型 没有新类型 实例 与原类型一致 场景 类型更直观
 //inline     类型 有包装类型的产生 实例 必要时使用包装类型 场景 优化包装类型性能
+//endregion
+
+//region JSON序列化
+//Gosn
+//moshi
+//ks
+//endregion
+
+//region 简单递归应用
+sealed class IntList {
+    object Nil : IntList()
+    data class Cons(val head: Int, val tail: IntList) : IntList()
+}
+
+fun iniListOf(vararg ints: Int): IntList {
+    return when (ints.size) {
+        0 -> IntList.Nil
+        else -> IntList.Cons(ints[0], iniListOf(*ints.slice(1 until ints.size).toIntArray()))
+    }
+}
+
+fun main() {
+    //val list = IntList.Cons(0, IntList.Cons(1, IntList.Cons(2, IntList.Cons(3, IntList.Nil))))
+    val list = iniListOf(1, 2, 3)
+}
+//endregion
+
+//region 泛型
+//定义约束 泛型约束
+fun <T : Comparable<T>> maxOf(a: T, b: T): T {
+    return if (a > b) a else b
+//    return a > b
+}
+
+//
+fun <T> callMax(a: T, b: T)
+        where T : Comparable<T>, T : () -> Unit {
+    if (a > b) a() else b()
+}
+
+//返回一个R
+fun <T, R> callMax2(a: T, b: T): R
+        where T : Comparable<T>, T : () -> R, R : Number {
+    return if (a > b) a() else b()
+}
+
+//泛型 不变
+sealed class List<T> {
+    object Nail : List<Nothing>()
+}
+
+//协变
+sealed class Lista<out T>
+
+//逆变
+sealed class Listb<in T>
+
+interface Books
+interface EduBooks : Books
+class BookStore<out T : Books> {
+    fun getBook(): T {
+        TODO()
+    }
+}
+
+fun covariant() {
+    val eduBookStore: BookStore<EduBooks> = BookStore<EduBooks>()
+    val bookStore: BookStore<EduBooks> = eduBookStore
+    val books: Books = bookStore.getBook()
+    val eduBook: EduBooks = eduBookStore.getBook()
+}
+//endregion
+
+//region 星投影
+
 //endregion
